@@ -1,5 +1,8 @@
 <html>
-<head></head>
+<head>
+	<meta charset="UTF-8">
+	<title>vue</title>
+</head>
 <body>
 	<div id="app">{{message}}</div>
 	<div id="app-2">
@@ -10,11 +13,23 @@
 	</div>
 	<div id="app-4">
 		<ol>
-			<li v-for="todo in todos">
-			{{todo.text}}
-			</li>
+			<li v-for="todo in todos">{{todo.text}}</li>
 		</ol>
 	</div>
+	<div id="app-5">
+		<p>{{message}}</p>
+		<button v-on:click="reverseMessage">点我翻转</button>
+	</div>
+	<div id="app-6">
+		<p>{{message}}</p>
+		<input type="text" v-model="message">
+	</div>
+
+
+
+
+
+
 	<script type="text/javascript" src="vue.js"></script>
 	<script type="text/javascript">
 
@@ -57,7 +72,23 @@
 					{text:'整个牛项目'}
 				]
 			}
-		})
+		});
+		//使用vue绑定Dom元素事件
+		var app5 = new Vue({
+			el: '#app-5',
+			data: {message: 'hello vue.js'},
+			methods: {
+			    reverseMessage: function () {
+			      this.message = this.message.split(' ').reverse().join(' ')
+		    	}
+  			}
+		});
+		var app6 = new Vue({
+			el: '#app-6',
+			data: {
+				message: 'Hello Vue!'
+			}
+		});
 	</script>
 
 </body>

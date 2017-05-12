@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue component</title>
+</head>
+<body>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript">
+		var data = {a:1};
+		var vue = new Vue({
+			el:'#example',
+			data:data
+		});
+		//绑定变量a的修改事件
+		vue.$watch('a', function(newVal, oldVal){
+			console.log('a was modified, new value:' + newVal + ", old value:" + oldVal);
+		})
+	</script>
+</body>
+</html>
