@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Template Grammer</title>
+</head>
+<body>
+	<div id="app">
+		<!-- 该元素的绑定之进行一次 -->
+		<span v-once>{{message}}</span>
+		<!-- 没弄懂 -->
+		<div v-html="rawHtml">{{message}}</div>
+		<!-- 绑定属性 -->
+		<div v-bind:id="message">bind idv</div>
+		<button v-bind:disabled="usable">点我哦</button>
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				message: "i come",
+				usable: true
+			}
+		})
+	</script>
+</body>
+</html>
