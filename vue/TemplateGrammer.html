@@ -6,13 +6,61 @@
 </head>
 <body>
 	<div id="app">
+
 		<!-- 该元素的绑定之进行一次 -->
 		<span v-once>{{message}}</span>
 		<!-- 没弄懂 -->
 		<div v-html="rawHtml">{{message}}</div>
+
 		<!-- 绑定属性 -->
 		<div v-bind:id="message">bind idv</div>
 		<button v-bind:disabled="usable">点我哦</button>
+
+		<!-- 模版中能够使用表达式 -->
+		<div>{{age+1}}</div>
+		<div>{{usable ? 'YES':'NO'}}</div>
+		<div>{{message.split(' ').reverse().join(' ')}}</div>
+		<div v-bind:id="'list-'+age">绑定属性表达式</div>
+	</div>
+
+	<!-- 
+	设置过滤器,过滤器函数总接受表达式的值作为第一个参数。
+	过滤器是 JavaScript 函数，因此可以接受参数：
+	{{ message | filterA('arg1', arg2) }}
+	这里，字符串 'arg1' 将传给过滤器作为第二个参数， arg2 表达式的值将被求值然后传给过滤器作为第三个参数。
+	过滤器可以串联：
+	{{ message | filterA | filterB }}
+	 -->
+	<div id="app2">
+		{{message | filterMessage}}
+		<div v-bind:id="myId | formatId">过滤器使用测试</div>
+	</div>
+	<div id="app3">
+		<div :title="message">v-bind缩写:":"</div>
+		<!-- 绑定事件函数,并将event事件传递过去,e.currentTarget可以拿到事件源对象 -->
+		<div @click="doSomething($event)">v-on缩写:"@"</div>
+	</div>
+	<!-- 
+		你可能已经注意到我们可以通过调用表达式中的 method 来达到同样的效果：
+		<p>Reversed message: "{{ reversedMessage() }}"</p>
+		// in component
+		methods: {
+		  reversedMessage: function () {
+		    return this.message.split('').reverse().join('')
+		  }
+		}
+		我们可以将同一函数定义为一个 method 而不是一个计算属性。对于最终的结果，两种方式确实是相同的。然而，不同的是计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。这就意味着只要 message 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+		这也同样意味着下面的计算属性将不再更新，因为 Date.now() 不是响应式依赖：
+		computed: {
+		  now: function () {
+		    return Date.now()
+		  }
+		}
+		相比而言，只要发生重新渲染，method 调用总会执行该函数。
+	-->
+	<div id="app4">
+		<div>普通属性:"{{message}}"</div>
+		<div>计算属性:"{{reverseMessage}}"</div>
 	</div>
 	<script type="text/javascript" src="vue.js"></script>
 	<script type="text/javascript">
@@ -20,7 +68,52 @@
 			el: '#app',
 			data: {
 				message: "i come",
-				usable: true
+				usable: true,
+				age: 25
+			}
+		});
+
+		var filter = new Vue({
+			el:'#app2',
+			data:{
+				message: "hello world!",
+				myId:1
+			},
+			filters: {
+				filterMessage:function(value){
+					if (!value) return '';
+					return value.split(' ').reverse().join(' ');
+				},
+				formatId:function(value) {
+					if (value == 1) return value+1;
+					return value;
+				}
+			}
+		});
+
+		var app3 = new Vue({
+			el:'#app3',
+			data:{
+				message: "hello world!",
+				myId:1
+			},
+			methods:{
+				doSomething:function(e){
+					console.log(e.currentTarget);
+					alert("哈哈，点我了吧！")
+				}
+			}
+		});
+
+		var app4 = new Vue({
+			el: '#app4',
+			data: {
+				message: "compute attribute"
+			},
+			computed:{
+				reverseMessage:function(){
+					return this.message.split(' ').reverse().join(' ');
+				}
 			}
 		})
 	</script>
