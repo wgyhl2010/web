@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="register-div">
+		<register-page v-on:submit="submit" v-on:clear="clear"></registerPage>
+	</div>
+	<script type="text/javascript">
+		var subimit = function(){
+			console.log('submit');
+		};
+		var clearInput = function() {
+			console.log('clear')
+		};
+		Vue.component('register-page', {
+			props: ['inputUsername', 'inputPassword', 'inputRepassword'],
+			template: '<div>\
+						<div><button @click="submit">注册</button><button @click="clear">清除</button></div>\
+					</div>',
+			methods: {
+				submit:function() {
+					//触发提交事件
+					this.$emit('submit');
+				},
+				clear:function() {
+					//触发清除事件
+					this.$emit('clear');
+				}
+			}
+		});
+		var register = new Vue({
+			el: '#register-div',
+			data:{
+				username:'',
+				password:'',
+				rePassword:''
+			},
+			methods:{
+				submit:function(){
+					console.log('submit');
+				},
+				clear:function(){
+					console.log('clear');
+				}
+			}
+		})
+	</script>
+</body>
+</html>
