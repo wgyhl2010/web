@@ -9,26 +9,23 @@
 	<div id="register-div">
 		<register-page v-on:submit="submit" v-on:clear="clear"></registerPage>
 	</div>
+
+
 	<script type="text/javascript">
-		var subimit = function(){
-			console.log('submit');
-		};
-		var clearInput = function() {
-			console.log('clear')
-		};
+
 		Vue.component('register-page', {
-			props: ['inputUsername', 'inputPassword', 'inputRepassword'],
+			props: [],
 			template: '<div>\
-						<div><button @click="submit">注册</button><button @click="clear">清除</button></div>\
+						<div><button @click="submit($event)">注册</button><button @click="clear($event)">清除</button></div>\
 					</div>',
 			methods: {
-				submit:function() {
+				submit:function(event) {
 					//触发提交事件
-					this.$emit('submit');
+					this.$emit('submit',event.currentTarget);
 				},
-				clear:function() {
+				clear:function(event) {
 					//触发清除事件
-					this.$emit('clear');
+					this.$emit('clear', event.currentTarget);
 				}
 			}
 		});
@@ -40,11 +37,13 @@
 				rePassword:''
 			},
 			methods:{
-				submit:function(){
-					console.log('submit');
+				submit:function(event){
+					console.log(event);
+					console.log('submit haha');
 				},
-				clear:function(){
-					console.log('clear');
+				clear:function(event){
+					console.log(event);
+					console.log('clear haha');
 				}
 			}
 		})

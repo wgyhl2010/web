@@ -16,20 +16,21 @@
 	</div>
 
 	<script type="text/javascript">
-  	new Vue({
-    el: '#app',
-    data: {
-        message: 'Hello Vue.js!'
-    },
-    methods: {
-     say: function(msg, event) { 
-      //获取点击对象      
-      var el = event.currentTarget;
-      var li2text = $(el).next().text();
-      alert("当前对象的内容："+$(el).text()+" 下一行内容："+li2text);
-     }
-    }
-   })
+	  	new Vue({
+	    el: '#app',
+	    data: {
+	        message: 'Hello Vue.js!'
+	    },
+	    methods: {
+	     say: function(msg, event) { 
+	      //获取点击对象      
+	      var el = event.currentTarget;
+	      console.log(el);
+	      var li2text = $(el).next().text();
+	      alert("当前对象的内容："+$(el).text()+" 下一行内容："+li2text);
+	     }
+	    }
+   		})
   </script>
 </body>
 </html>

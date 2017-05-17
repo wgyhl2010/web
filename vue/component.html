@@ -3,10 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Vue component</title>
+	<style type="text/css">
+	</style>
 </head>
 <body>
 	<div id="app-7">
 		<todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+	</div>
+	<div id="app-8">
+		<div v-for="grocery in groceryList"><label class="id">{{grocery.id}}</label><span class="content">{{grocery.text}}</span><span class="option"><button>删除</button></span></div>
 	</div>
 	<script type="text/javascript" src="vue.js"></script>
 	<script type="text/javascript">
@@ -22,6 +27,21 @@
 			      { text: '奶酪' },
 			      { text: '随便其他什么人吃的东西' }
 			    ]
+			}
+		});
+		var table = new Vue({
+			el: '#app-8',
+			data: {
+			    groceryList: [
+			      {id:1, text: '蔬菜' },
+			      {id:2, text: '奶酪' },
+			      {id:3, text: '随便其他什么人吃的东西' }
+			    ]
+			},
+			methods: {
+				submit: function() {
+					console.log('event.currentTarget');
+				}
 			}
 		})
 	</script>
